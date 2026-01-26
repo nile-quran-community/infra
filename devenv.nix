@@ -16,6 +16,7 @@
     awscli2
     kubectl
     kubernetes-helm
+    helmfile
     argocd
     k9s
   ];

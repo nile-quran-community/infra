@@ -1,0 +1,12 @@
+# NOTE: Ref: https://helmfile.readthedocs.io/en/latest/#configuration
+repositories:
+  - name: argo
+    url: https://argoproj.github.io/argo-helm
+
+releases:
+  - name: argocd
+    namespace: argocd
+    createNamespace: true
+    chart: argo/argo-cd
+    values:
+      - cluster/argocd/helm-values.yml
