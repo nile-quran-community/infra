@@ -8,5 +8,6 @@ releases:
     namespace: argocd
     createNamespace: true
     chart: argo/argo-cd
+    version: 10.2.0 # NOTE: ArgoCD v3.4.5
     values:
       - cluster/argocd/helm-values.yml

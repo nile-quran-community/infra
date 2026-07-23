@@ -1,5 +1,8 @@
 # NOTE: Source: https://github.com/argoproj/argo-helm/blob/main/charts/argo-cd/values.yaml
 crds:
   install: true
-global:
-  domain: argo.local
+
+configs:
+  cm:
+    create: true
+    kustomize.buildOptions: --enable-helm

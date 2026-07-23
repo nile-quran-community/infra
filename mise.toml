@@ -1,0 +1,21 @@
+[settings]
+lockfile = true
+all_compile = false
+
+[tools]
+# NOTE: IaC
+opentofu = "1.12"
+# NOTE: K8s
+kubectl = "1.36"
+helm = "4.2"
+helmfile = "1.7"
+argocd = "3.4.5"
+# NOTE: Linters
+tflint = "0.64"
+# NOTE: Utils
+prek = "0.4"
+
+[tasks.install]
+description = "Install all development environment dependencies and hooks"
+alias = "i"
+run = ["mise install", "prek install"]

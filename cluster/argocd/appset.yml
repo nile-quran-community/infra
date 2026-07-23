@@ -1,0 +1,63 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: apps
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: [missingkey=error]
+  generators:
+    - merge:
+        mergeKeys:
+          - key
+        generators:
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/nu-quran-community/infra.git
+                    revision: HEAD
+                    directories:
+                      - path: cluster/argocd/apps/*
+                - list:
+                    elements: [{ key: "{{ .path.basenameNormalized }}" }]
+          - matrix:
+              generators:
+                - git:
+                    repoURL: https://github.com/nu-quran-community/infra.git
+                    revision: HEAD
+                    files:
+                      - path: cluster/argocd/apps/*/config.yml
+                - list:
+                    elements: [{ key: "{{ .path.basenameNormalized }}" }]
+  template:
+    metadata:
+      name: "{{ .path.basename }}"
+    spec:
+      source:
+        repoURL: https://github.com/nu-quran-community/infra.git
+        targetRevision: main
+        path: "{{ .path.path }}"
+      destination:
+        name: in-cluster
+        namespace: "{{ .path.basenameNormalized }}"
+      syncPolicy:
+        automated:
+          enabled: true
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreatNamespace=true
+          - ServerSideApply=true
+  templatePath: |
+    {{- if or (hasKey . "autoSync") (hasKey . "ignoreDifferences") }}
+    spec:
+      {{- if hasKey . "autoSync" }}
+      syncPolicy:
+        automated:
+          enabled: {{ .autoSync }}
+      {{- end }}
+      {{- if hasKey . "ignoreDifferences" }}
+      ignoreDifferences:
+        {{- toYaml .ignoreDifferences | nindent 4 }}
+      {{- end }}
+    {{- end }}
