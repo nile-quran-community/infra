@@ -1,7 +1,8 @@
 # NOTE: Ref: https://helmfile.readthedocs.io/en/latest/#configuration
 repositories:
   - name: argo
-    url: https://argoproj.github.io/argo-helm
+    url: oci://ghcr.io/argoproj/argo-helm
+    oci: true
 
 releases:
   - name: argocd
