@@ -1,14 +1,19 @@
-# Example configuration.
-# Copy this file to terraform.tfvars and update the values.
+# Real public key content, not a file path.
+ssh_public_keys = {
+  ibrahim = "ssh-ed25519 AAAA... ibrahim@laptop"
+  ci      = "ssh-ed25519 AAAA... github-actions"
+}
 
-ssh_key_name   = "terraform-key"
-install_docker = true
+k3s_role  = "server"
+k3s_token = "CHANGE_ME"
+ssh_port  = 15022
 
+# data_center_id / template_id confirmed against the real account.
 vps_instances = {
   web-01 = {
-    hostname       = "web-01.example.com"
-    plan           = "kvm2"
-    template_id    = 1002
-    data_center_id = 13
+    hostname       = "k3s-server-01"
+    plan           = "hostingercom-vps-kvm2-usd-1m"
+    template_id    = 1007
+    data_center_id = 14
   }
 }
