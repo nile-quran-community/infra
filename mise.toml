@@ -10,6 +10,7 @@ kubectl = "1.36"
 helm = "4.2"
 helmfile = "1.7"
 argocd = "3.4.5"
+kubeseal = "0.38.4"
 # NOTE: Linters
 tflint = "0.64"
 # NOTE: Utils
