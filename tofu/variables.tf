@@ -1,5 +1,3 @@
-# Hostinger API token.
-# Prefer passing it through TF_VAR_hostinger_api_token.
 variable "hostinger_api_token" {
   description = "Hostinger API token"
   type        = string
@@ -7,32 +5,54 @@ variable "hostinger_api_token" {
   default     = null
 }
 
-# Existing SSH public key path.
-# Leave null to generate a new key pair automatically.
-variable "ssh_public_key_path" {
-  description = "Path to an existing SSH public key"
+# Map of key name => raw public key content. No file paths, no generation.
+variable "ssh_public_keys" {
+  description = "Map of key name => SSH public key content. All keys are attached to every VPS."
+  type        = map(string)
+}
+
+# Non-default SSH port, hardened in the post-install script below.
+variable "ssh_port" {
+  description = "Non-default SSH port"
+  type        = number
+  default     = 15022
+}
+
+# "server" = first/control node that starts the cluster.
+# "agent"  = joins an existing cluster, needs k3s_server_url.
+variable "k3s_role" {
+  description = "k3s node role: server or agent"
+  type        = string
+  default     = "server"
+
+  validation {
+    condition     = contains(["server", "agent"], var.k3s_role)
+    error_message = "k3s_role must be \"server\" or \"agent\"."
+  }
+}
+
+variable "k3s_version" {
+  description = "k3s channel/version, e.g. v1.30.2+k3s1. Empty = latest stable."
+  type        = string
+  default     = ""
+}
+
+# Shared secret between server and agents. Sensitive: lives in state, keep
+# the backend private (see backend.tf) once this holds a real value.
+variable "k3s_token" {
+  description = "Cluster join token"
+  type        = string
+  sensitive   = true
+}
+
+variable "k3s_server_url" {
+  description = "Existing k3s server URL, e.g. https://10.0.0.1:6443. Required when k3s_role = \"agent\"."
   type        = string
   default     = null
 }
 
-# Display name for the uploaded SSH key.
-variable "ssh_key_name" {
-  description = "SSH key name"
-  type        = string
-  default     = "terraform-managed-key"
-}
-
-# Enable Docker installation after VPS provisioning.
-variable "install_docker" {
-  description = "Install Docker automatically"
-  type        = bool
-  default     = true
-}
-
-# VPS instances to provision.
 variable "vps_instances" {
-  description = "Map of VPS instances"
-
+  description = "Map of servers to create. Key = logical name, value = its config."
   type = map(object({
     hostname       = string
     plan           = string
