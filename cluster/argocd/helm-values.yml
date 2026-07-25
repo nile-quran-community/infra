@@ -3,6 +3,26 @@ crds:
   install: true
 
 configs:
+  # NOTE: General Argo CD configuration. Any values you put under `.configs.cm` are passed to argocd-cm ConfigMap.
+  # Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
   cm:
     create: true
     kustomize.buildOptions: --enable-helm
+
+extraObjects:
+  # TODO: SealedSecret for accessing GitOps repository
+  # NOTE: Root application for bootstrapping cluster apps
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: root
+    spec:
+      source:
+        repoURL: https://github.com/nu-quran-community/infra.git
+        targetRevision: main
+        path: cluster/argocd
+        directory:
+          include: appset.yml
+      destination:
+        name: in-cluster
+        namespace: argocd
