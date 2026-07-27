@@ -37,12 +37,11 @@ variable "k3s_version" {
   default     = ""
 }
 
-# Shared secret between server and agents. Sensitive: lives in state, keep
-# the backend private (see backend.tf) once this holds a real value.
 variable "k3s_token" {
-  description = "Cluster join token"
+  description = "Cluster join token. Optional — if omitted, k3s generates one automatically."
   type        = string
   sensitive   = true
+  default     = null
 }
 
 variable "k3s_server_url" {
