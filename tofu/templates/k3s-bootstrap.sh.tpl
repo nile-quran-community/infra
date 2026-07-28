@@ -29,6 +29,7 @@ if command -v ufw >/dev/null 2>&1; then
   ufw allow ${ssh_port}/tcp
   ufw allow 6443/tcp
   ufw allow 8472/udp
+  ufw allow 10250/tcp
   ufw allow 80/tcp
   ufw allow 443/tcp
 %{ if k3s_role == "server" }
