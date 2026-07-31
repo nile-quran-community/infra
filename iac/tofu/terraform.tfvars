@@ -1,10 +1,7 @@
+ssh_port = 15022
 ssh_public_keys = {
   youssef = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG7TxHMftZu28W+f/GSUTrGjo/WRU79XmgzpVPgQpyi"
 }
-
-k3s_role = "server"
-ssh_port = 15022
-
 vps_instances = {
   k3s-server = {
     hostname       = "k3s-server.nuqc.local"
