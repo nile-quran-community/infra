@@ -11,7 +11,7 @@ resource "hostinger_vps_post_install_script" "k3s_setup" {
   content = templatefile("${path.module}/templates/k3s-bootstrap.sh.tpl", {
     k3s_version    = var.k3s_version
     k3s_role       = var.k3s_role
-    k3s_token      = coalesce(var.k3s_token, "")
+    k3s_token      = var.k3s_token
     k3s_server_url = var.k3s_server_url
     ssh_port       = var.ssh_port
   })

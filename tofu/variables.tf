@@ -40,7 +40,7 @@ variable "k3s_token" {
   description = "Cluster join token. Optional — if omitted, k3s generates one automatically."
   type        = string
   sensitive   = true
-  default     = null
+  default     = ""
 }
 
 variable "k3s_server_url" {
