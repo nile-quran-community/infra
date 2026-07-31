@@ -2,7 +2,6 @@ variable "hostinger_api_token" {
   description = "Hostinger API token"
   type        = string
   sensitive   = true
-  default     = null
 }
 
 # Map of key name => raw public key content. No file paths, no generation.
