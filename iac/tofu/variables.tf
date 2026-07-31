@@ -9,12 +9,6 @@ variable "ssh_public_keys" {
   type        = map(string)
 }
 
-variable "ssh_port" {
-  description = "Non-default SSH port"
-  type        = number
-  default     = 15022
-}
-
 variable "vps_instances" {
   description = "Map of servers to create. Key = logical name, value = its config."
   type = map(object({
