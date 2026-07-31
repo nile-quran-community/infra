@@ -1,19 +1,15 @@
-# Example configuration.
-# Copy this file to terraform.tfvars and update the values.
-
 ssh_public_keys = {
-  ibrahim = "ssh-ed25519 AAAA... ibrahim@laptop"
+  youssef = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEG7TxHMftZu28W+f/GSUTrGjo/WRU79XmgzpVPgQpyi"
 }
 
-k3s_role  = "server"
-k3s_token = "CHANGE_ME"
-ssh_port  = 15022
+k3s_role = "server"
+ssh_port = 15022
 
 vps_instances = {
-  web-01 = {
-    hostname       = "web-01.example.com"
-    plan           = "kvm2"
-    template_id    = 1007
-    data_center_id = 14
+  k3s-server = {
+    hostname       = "k3s-server.nuqc.local"
+    plan           = "hostingereg-vps-kvm2-egp-1m"
+    template_id    = 1077 # NOTE: Ubuntu 24.04 LTS
+    data_center_id = 19   # NOTE: Frankfurt
   }
 }
