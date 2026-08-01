@@ -14,4 +14,4 @@ images:
   - name: ghcr.io/nu-quran-community/nu-quran-nextjs
     newTag: 1.0.0
   - name: ghcr.io/nu-quran-community/nu-quran-django
-    newTag: 0.10.0
+    newTag: 0.10.1
