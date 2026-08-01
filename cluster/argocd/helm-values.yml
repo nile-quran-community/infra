@@ -17,6 +17,7 @@ extraObjects:
     metadata:
       name: root
     spec:
+      project: default
       source:
         repoURL: https://github.com/nu-quran-community/infra.git
         targetRevision: main
