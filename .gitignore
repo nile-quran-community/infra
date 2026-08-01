@@ -6,3 +6,6 @@ mise.local.toml
 
 # Testing
 k3s.yaml
+
+# Ansible
+ansible/collections
