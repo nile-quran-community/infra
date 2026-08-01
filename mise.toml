@@ -17,6 +17,9 @@ tflint = "0.64"
 # NOTE: Utils
 prek = "0.4"
 
+[env]
+ANSIBLE_COLLECTIONS_PATH = "{{ config_root }}/ansible/collections"
+
 [tasks.install]
 description = "Install all development environment dependencies and hooks"
 alias = "i"
