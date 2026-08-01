@@ -5,7 +5,7 @@ all_compile = false
 [tools]
 # NOTE: IaC
 opentofu = "1.12"
-ansible-core = { version = "2.21", uvx_args = "--with ansible==14" }
+ansible-core = { version = "2.21", uvx_args = "-p 3.13 --with ansible==14" }
 # NOTE: K8s
 kubectl = "1.36"
 helm = "4.2"
@@ -18,7 +18,7 @@ tflint = "0.64"
 prek = "0.4"
 
 [env]
-ANSIBLE_COLLECTIONS_PATH = "{{ config_root }}/ansible/collections"
+ANSIBLE_COLLECTIONS_PATH = { value = "{{ config_root }}/ansible/collections:{{ tools['ansible-core'].path }}/ansible-core/lib/python3.13/site-packages", tools = true }
 
 [tasks.install]
 description = "Install all development environment dependencies and hooks"

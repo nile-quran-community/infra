@@ -7,6 +7,13 @@ backend = "pipx:ansible-core"
 [tools.ansible-core.options]
 uvx_args = "--with ansible==14"
 
+[[tools.ansible-core]]
+version = "2.21.2"
+backend = "pipx:ansible-core"
+
+[tools.ansible-core.options]
+uvx_args = "-p 3.13 --with ansible==14"
+
 [[tools.argocd]]
 version = "3.4.5"
 backend = "aqua:argoproj/argo-cd"
