@@ -5,3 +5,4 @@ k3s_cluster:
         k3s-server:
           ansible_host: srv1871728.hstgr.cloud
           ansible_user: ansible
+          ansible_port: 15022
