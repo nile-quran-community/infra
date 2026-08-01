@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nuqc-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: nuqc-backend
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8000

@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nuqc-backend
+  labels:
+    app: nuqc-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nuqc-backend
+  template:
+    metadata:
+      labels:
+        app: nuqc-backend
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: nuqc-backend
+          image: ghcr.io/nu-quran-community/nu-quran-django:latest
+          envFrom:
+            - configMapRef:
+                name: nuqc-backend
+            - secretRef:
+                name: nuqc-backend
+          ports:
+            - name: http
+              containerPort: 8000
+          volumeMounts:
+            - name: nuqc-db
+              mountPath: /var/lib/nuqc
+      volumes:
+        - name: nuqc-db
+          persistentVolumeClaim:
+            claimName: nuqc-db

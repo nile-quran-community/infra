@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nuqc-frontend
+  labels:
+    app: nuqc-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nuqc-frontend
+  template:
+    metadata:
+      labels:
+        app: nuqc-frontend
+    spec:
+      securityContext:
+        runAsUser: 1001
+        runAsGroup: 1001
+      containers:
+        - name: nuqc-backend
+          image: ghcr.io/nu-quran-community/nu-quran-nextjs:latest
+          envFrom:
+            - configMapRef:
+                name: nuqc-frontend
+          ports:
+            - name: http
+              containerPort: 3000
