@@ -33,6 +33,7 @@ spec:
     metadata:
       name: "{{ .path.basename }}"
     spec:
+      project: default
       source:
         repoURL: https://github.com/nu-quran-community/infra.git
         targetRevision: main
