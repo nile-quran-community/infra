@@ -4,6 +4,6 @@ metadata:
   name: nuqc-backend
 data:
   DATABASE_URL: sqlite:////var/lib/nuqc/db.sqlite
-  DJANGO_DEBUG: "false"
+  DJANGO_DEBUG: "False"
   DJANGO_ENVIRONMENT: PROD
   DJANGO_ALLOWED_HOSTS: nuqc-backend
