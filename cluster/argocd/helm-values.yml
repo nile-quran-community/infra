@@ -8,6 +8,15 @@ configs:
   cm:
     create: true
     kustomize.buildOptions: --enable-helm
+    # NOTE: Create users
+    accounts.youssef: apiKey, login
+    accounts.ibrahim: apiKey, login
+
+  rbac:
+    create: true
+    policy.csv: |
+      g, youssef, role:admin
+      g, ibrahim, role:admin
 
 extraObjects:
   # TODO: SealedSecret for accessing GitOps repository
