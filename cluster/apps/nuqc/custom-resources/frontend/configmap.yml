@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: nuqc-frontend
 data:
+  HOSTNAME: 0.0.0.0
   BASE_URL: http://nuqc-backend/
