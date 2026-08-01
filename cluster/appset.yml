@@ -17,7 +17,7 @@ spec:
                     repoURL: https://github.com/nu-quran-community/infra.git
                     revision: HEAD
                     directories:
-                      - path: cluster/argocd/apps/*
+                      - path: cluster/apps/*
                 - list:
                     elements: [{ key: "{{ .path.basenameNormalized }}" }]
           - matrix:
@@ -26,7 +26,7 @@ spec:
                     repoURL: https://github.com/nu-quran-community/infra.git
                     revision: HEAD
                     files:
-                      - path: cluster/argocd/apps/*/config.yml
+                      - path: cluster/apps/*/config.yml
                 - list:
                     elements: [{ key: "{{ .path.basenameNormalized }}" }]
   template:
