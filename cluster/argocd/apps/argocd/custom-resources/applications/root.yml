@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/nu-quran-community/infra.git
+    targetRevision: main
+    path: cluster/argocd
+    directory:
+      include: appset.yml
+  destination:
+    name: in-cluster
+    namespace: argocd
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreatNamespace=true
+      - ServerSideApply=true

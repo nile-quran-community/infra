@@ -17,22 +17,3 @@ configs:
     policy.csv: |
       g, youssef, role:admin
       g, ibrahim, role:admin
-
-extraObjects:
-  # TODO: SealedSecret for accessing GitOps repository
-  # NOTE: Root application for bootstrapping cluster apps
-  - apiVersion: argoproj.io/v1alpha1
-    kind: Application
-    metadata:
-      name: root
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/nu-quran-community/infra.git
-        targetRevision: main
-        path: cluster/argocd
-        directory:
-          include: appset.yml
-      destination:
-        name: in-cluster
-        namespace: argocd
