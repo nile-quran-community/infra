@@ -1,0 +1,32 @@
+- name: Setup users
+  hosts: all
+  become: true
+  vars:
+    default_user_groups: [sudo, netdev, plugdev, audio, video]
+    users:
+      - name: ibrahim
+        authorized_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINidK63d4v6ZMTJRswgzHh6f9DCP7hCN1pVwUaXrFynf
+      - name: youssef
+        authorized_keys:
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFYCsf2QxlB7cdZMQbx57QioH4HbpNmxFJsMgTUfJX3j
+  tasks:
+    - name: Create admin users
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+        label: "{{ user.name }}"
+      ansible.builtin.user:
+        state: present
+        name: "{{ user.name }}"
+        groups: "{{ user.groups | default(default_user_groups, true) }}"
+
+    - name: Add SSH authorized keys for each user
+      loop: "{{ users }}"
+      loop_control:
+        loop_var: user
+        label: "{{ user.name }}"
+      ansible.posix.authorized_key:
+        state: present
+        user: "{{ user.name }}"
+        key: "{{ user.authorized_keys | list | join('\n') }}"

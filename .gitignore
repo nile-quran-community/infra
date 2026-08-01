@@ -6,3 +6,9 @@ mise.local.toml
 
 # Testing
 k3s.yaml
+
+# Ansible
+.vaultpass
+ansible/collections
+ansible/host_vars/*/local.yml
+ansible/k3s
