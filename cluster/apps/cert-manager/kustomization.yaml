@@ -5,7 +5,7 @@ helmCharts:
     releaseName: cert-manager
     namespace: cert-manager
     repo: oci://quay.io/jetstack/charts
-    version: v1.12.1
+    version: v1.21.1
     valuesFile: values.yml
 resources:
   - ./custom-resources/cluster-issuer/letsencrypt.yml
