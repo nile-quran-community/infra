@@ -17,6 +17,9 @@ spec:
       hostname: srv1871728.hstgr.cloud
       protocol: HTTPS
       port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
       tls:
         mode: Terminate
         certificateRefs:
