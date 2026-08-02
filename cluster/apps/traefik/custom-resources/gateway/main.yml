@@ -23,4 +23,6 @@ spec:
       tls:
         mode: Terminate
         certificateRefs:
-          - name: hostinger-domain-cert
+          - kind: Secret
+            group: ""
+            name: hostinger-domain-cert
