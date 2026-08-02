@@ -1,0 +1,9 @@
+# NOTE: Install CRDs
+installCRDs: true
+crds:
+  enabled: true
+
+# NOTE: Enable Gateway API support
+config:
+  gatewayAPI:
+    enabled: true
