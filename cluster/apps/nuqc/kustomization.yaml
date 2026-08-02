@@ -10,6 +10,7 @@ resources:
   - ./custom-resources/frontend/configmap.yml
   - ./custom-resources/frontend/deployment.yml
   - ./custom-resources/frontend/service.yml
+  - ./custom-resources/httproute/frontend.yml
 images:
   - name: ghcr.io/nu-quran-community/nu-quran-nextjs
     newTag: 1.0.0
