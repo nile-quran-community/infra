@@ -17,3 +17,8 @@ configs:
     policy.csv: |
       g, youssef, role:admin
       g, ibrahim, role:admin
+
+server:
+  # WARN: Disable self-signed TLS certificate for ArgoCD server (use Gateway API instead)
+  extraArgs:
+    - --insecure
