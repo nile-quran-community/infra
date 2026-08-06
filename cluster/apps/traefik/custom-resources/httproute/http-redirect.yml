@@ -10,6 +10,7 @@ spec:
       sectionName: http
   hostnames:
     - nile-quran-community.com
+    - argo.nile-quran-community.com
   rules:
     - matches:
         - path:
