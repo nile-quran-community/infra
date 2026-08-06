@@ -13,8 +13,8 @@ spec:
       allowedRoutes:
         namespaces:
           from: All
-    - name: https-hostinger
-      hostname: srv1871728.hstgr.cloud
+    - name: https
+      hostname: nile-quran-community.com
       protocol: HTTPS
       port: 443
       allowedRoutes:
@@ -25,4 +25,4 @@ spec:
         certificateRefs:
           - kind: Secret
             group: ""
-            name: hostinger-domain-cert
+            name: nile-quran-community-cert

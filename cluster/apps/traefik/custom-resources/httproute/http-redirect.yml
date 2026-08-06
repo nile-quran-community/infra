@@ -9,7 +9,7 @@ spec:
       name: main
       sectionName: http
   hostnames:
-    - srv1871728.hstgr.cloud
+    - nile-quran-community.com
   rules:
     - matches:
         - path:

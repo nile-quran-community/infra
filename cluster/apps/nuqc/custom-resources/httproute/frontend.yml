@@ -8,7 +8,7 @@ spec:
       kind: Gateway
       name: main
       namespace: traefik
-      sectionName: https-hostinger
+      sectionName: https
   rules:
     - matches:
         - path:
