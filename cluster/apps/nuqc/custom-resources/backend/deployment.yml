@@ -32,6 +32,12 @@ spec:
           volumeMounts:
             - name: nuqc-db
               mountPath: /var/lib/nuqc
+          readinessProbe:
+            timeoutSeconds: 10
+            exec:
+              command:
+                - django-admin
+                - check
       volumes:
         - name: nuqc-db
           persistentVolumeClaim:
