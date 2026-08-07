@@ -26,3 +26,7 @@ spec:
           ports:
             - name: http
               containerPort: 3000
+          readinessProbe:
+            timeoutSeconds: 5
+            tcpSocket:
+              port: 3000
