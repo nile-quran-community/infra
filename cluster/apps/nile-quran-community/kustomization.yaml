@@ -13,6 +13,6 @@ resources:
   - ./custom-resources/httproute/frontend.yml
 images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs
-    newTag: 2.0.0
+    newTag: 2.0.1
   - name: ghcr.io/nile-quran-community/nile-quran-django
     newTag: 1.0.0
