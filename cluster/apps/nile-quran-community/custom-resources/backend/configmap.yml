@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: nqc-backend
+data:
+  DATABASE_URL: sqlite:////var/lib/nqc/db.sqlite
+  DJANGO_DEBUG: "False"
+  DJANGO_ENVIRONMENT: PROD
+  DJANGO_ALLOWED_HOSTS: nqc-backend,localhost,127.0.0.1

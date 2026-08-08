@@ -1,37 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nuqc-backend
+  name: nqc-backend
   labels:
-    app: nuqc-backend
+    app: nqc-backend
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nuqc-backend
+      app: nqc-backend
   template:
     metadata:
       labels:
-        app: nuqc-backend
+        app: nqc-backend
     spec:
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
       containers:
-        - name: nuqc-backend
-          image: ghcr.io/nu-quran-community/nu-quran-django:latest
+        - name: nqc-backend
+          image: ghcr.io/nile-quran-community/nile-quran-django:latest
           envFrom:
             - configMapRef:
-                name: nuqc-backend
+                name: nqc-backend
             - secretRef:
-                name: nuqc-backend
+                name: nqc-backend
           ports:
             - name: http
               containerPort: 8000
           volumeMounts:
-            - name: nuqc-db
-              mountPath: /var/lib/nuqc
+            - name: nqc-db
+              mountPath: /var/lib/nqc
           readinessProbe:
             timeoutSeconds: 10
             exec:
@@ -39,6 +39,6 @@ spec:
                 - django-admin
                 - check
       volumes:
-        - name: nuqc-db
+        - name: nqc-db
           persistentVolumeClaim:
-            claimName: nuqc-db
+            claimName: nqc-db

@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nuqc-frontend
+  name: nqc-frontend
 data:
   HOSTNAME: 0.0.0.0
-  BASE_URL: http://nuqc-backend/
+  BASE_URL: http://nqc-backend/

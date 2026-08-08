@@ -5,7 +5,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/nu-quran-community/infra.git
+    repoURL: https://github.com/nile-quran-community/infra.git
     targetRevision: main
     path: cluster
     directory:

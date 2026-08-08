@@ -12,7 +12,7 @@ resources:
   - ./custom-resources/frontend/service.yml
   - ./custom-resources/httproute/frontend.yml
 images:
-  - name: ghcr.io/nu-quran-community/nu-quran-nextjs
+  - name: ghcr.io/nile-quran-community/nile-quran-nextjs
+    newTag: 2.0.0
+  - name: ghcr.io/nile-quran-community/nile-quran-django
     newTag: 1.0.0
-  - name: ghcr.io/nu-quran-community/nu-quran-django
-    newTag: 0.11.0
