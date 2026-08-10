@@ -10,6 +10,7 @@ resources:
   - ./custom-resources/frontend/configmap.yml
   - ./custom-resources/frontend/deployment.yml
   - ./custom-resources/frontend/service.yml
+  - ./custom-resources/filters/rate-limit.yml
   - ./custom-resources/httproute/frontend.yml
 images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs

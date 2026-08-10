@@ -17,6 +17,11 @@ spec:
             type: PathPrefix
             value: /
       filters:
+        - type: ExtensionRef
+          extensionRef:
+            group: traefik.io
+            kind: Middleware
+            name: rate-limit
         - type: RequestRedirect
           requestRedirect:
             scheme: https
