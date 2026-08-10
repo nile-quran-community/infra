@@ -29,16 +29,27 @@ spec:
           ports:
             - name: http
               containerPort: 8000
-          volumeMounts:
-            - name: nqc-db
-              mountPath: /var/lib/nqc
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: [ALL]
+            seccompProfile:
+              type: RuntimeDefault
           readinessProbe:
             timeoutSeconds: 10
             exec:
               command:
                 - django-admin
                 - check
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: nqc-db
+              mountPath: /var/lib/nqc
       volumes:
+        - name: tmp
+          emptyDir: {}
         - name: nqc-db
           persistentVolumeClaim:
             claimName: nqc-db
