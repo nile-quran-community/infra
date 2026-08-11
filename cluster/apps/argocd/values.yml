@@ -2,6 +2,9 @@
 crds:
   install: true
 
+global:
+  domain: argo.nile-quran-community.com
+
 configs:
   # NOTE: General Argo CD configuration. Any values you put under `.configs.cm` are passed to argocd-cm ConfigMap.
   # Ref: https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
