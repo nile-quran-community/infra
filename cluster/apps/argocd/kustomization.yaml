@@ -9,4 +9,4 @@ helmCharts:
     valuesFile: values.yml
 resources:
   - ./custom-resources/applications/root.yml
-  - ./custom-resources/httproute/argocd-server.yml
+  - ./custom-resources/ingress/argocd.yml

@@ -3,7 +3,7 @@ crds:
   install: true
 
 global:
-  domain: argo.nile-quran-community.com
+  domain: argocd.tail689c1e.ts.net
 
 configs:
   # NOTE: General Argo CD configuration. Any values you put under `.configs.cm` are passed to argocd-cm ConfigMap.
