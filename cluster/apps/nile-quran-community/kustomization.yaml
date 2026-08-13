@@ -15,6 +15,6 @@ resources:
   - ./custom-resources/ingress/nqc-backend.yml
 images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs
-    newTag: 2.3.1
+    newTag: 2.3.2
   - name: ghcr.io/nile-quran-community/nile-quran-django
     newTag: 1.1.0
