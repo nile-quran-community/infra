@@ -7,3 +7,4 @@ data:
   DJANGO_DEBUG: "False"
   DJANGO_ENVIRONMENT: PROD
   DJANGO_ALLOWED_HOSTS: nqc-backend,nqc-backend.tail689c1e.ts.net
+  CSRF_TRUSTED_ORIGINS: https://nqc-backend.tail689c1e.ts.net

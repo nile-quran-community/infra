@@ -17,4 +17,4 @@ images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs
     newTag: 2.2.5
   - name: ghcr.io/nile-quran-community/nile-quran-django
-    newTag: 1.0.0
+    newTag: 1.1.0
