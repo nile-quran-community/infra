@@ -6,4 +6,4 @@ data:
   DATABASE_URL: sqlite:////var/lib/nqc/db.sqlite
   DJANGO_DEBUG: "False"
   DJANGO_ENVIRONMENT: PROD
-  DJANGO_ALLOWED_HOSTS: nqc-backend,localhost,127.0.0.1
+  DJANGO_ALLOWED_HOSTS: nqc-backend,nqc-backend.tail689c1e.ts.net

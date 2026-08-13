@@ -12,6 +12,7 @@ resources:
   - ./custom-resources/frontend/service.yml
   - ./custom-resources/filters/rate-limit.yml
   - ./custom-resources/httproute/frontend.yml
+  - ./custom-resources/ingress/nqc-backend.yml
 images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs
     newTag: 2.2.5
