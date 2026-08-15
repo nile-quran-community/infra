@@ -1,25 +1,26 @@
 ## Overview
 
-This repository manages the infrastructure and GitOps deployment for the Nile Quran Community platform. The live site is at `nile-quran-community.com` and the Argo CD dashboard is at `argo.nile-quran-community.com`.
+This repository manages the infrastructure and GitOps deployment for the Nile Quran Community platform. The live site is at `nile-quran-community.com`. Argo CD and the backend API are not exposed to the public internet — they are reachable only over Tailscale at `https://argocd.tail689c1e.ts.net/` and `https://nqc-backend.tail689c1e.ts.net/` respectively.
 
 ## Architecture
 
 - **Host**: Single Hostinger VPS (`srv1871728.hstgr.cloud`) with 2 vCPU / 8 GiB RAM.
 - **Cluster**: Single-node k3s (`v1.36.2+k3s1`) with Traefik enabled.
-- **Ingress**: Gateway API via a Traefik `Gateway` named `main` in the `traefik` namespace.
+- **Ingress (public)**: Gateway API via a Traefik `Gateway` named `main` in the `traefik` namespace.
   - Listener `http` on port 80 (redirects to HTTPS).
   - Listener `https` on port 443 for `nile-quran-community.com`.
-  - Listener `https-argocd` on port 443 for `argo.nile-quran-community.com` (restricted to the `argocd` namespace via label selector).
-- **TLS**: cert-manager with Let's Encrypt ACME HTTP-01 solver via the Gateway.
+- **Ingress (tailnet-only)**: The Tailscale Kubernetes operator (`cluster/apps/tailscale`) exposes Argo CD and the backend API to the tailnet via classic `Ingress` resources with `ingressClassName: tailscale`. Tailscale provisions TLS automatically (`<name>.tail689c1e.ts.net`). The operator also proxies the Kubernetes API server (`apiServerProxyConfig`). Joining the tailnet requires an explicit invite from a tailnet admin.
+- **TLS (public)**: cert-manager with Let's Encrypt ACME HTTP-01 solver via the Gateway.
   - ClusterIssuer: `letsencrypt`, email `nuqurancommunity@outlook.com`.
-  - Certificate secrets: `nile-quran-community-cert` and `argo-nile-quran-community-cert`.
+  - Certificate secret: `nile-quran-community-cert`.
 - **GitOps**: Argo CD auto-syncs the `main` branch with `prune: true` and `selfHeal: true`.
   - Root Application at `cluster/apps/argocd/custom-resources/applications/root.yml` watches `cluster/appset.yml`.
   - ApplicationSet at `cluster/appset.yml` generates one Application per directory in `cluster/apps/*`.
 - **Apps deployed**:
-  - `argocd` — Argo CD itself (Helm chart + root Application + HTTPRoute).
+  - `argocd` — Argo CD itself (Helm chart + root Application + tailnet Ingress).
   - `cert-manager` — cert-manager Helm chart + `letsencrypt` ClusterIssuer.
   - `sealed-secrets` — Bitnami Sealed Secrets Helm chart.
+  - `tailscale` — Tailscale Kubernetes operator (tailnet-only access to Argo CD, backend API, and the Kubernetes API).
   - `traefik` — `main` Gateway + HTTP→HTTPS redirect (Traefik ships with k3s; this app only manages Gateway API resources).
   - `nile-quran-community` — Next.js frontend + Django backend with SQLite PVC.
 - **Secrets**: Kubernetes secrets are `SealedSecret`s (Bitnami). Ansible secrets are `ansible-vault` encrypted. Never commit plaintext secrets.
@@ -52,6 +53,7 @@ This repository manages the infrastructure and GitOps deployment for the Nile Qu
         ├── argocd/
         ├── cert-manager/
         ├── sealed-secrets/
+        ├── tailscale/
         ├── traefik/
         └── nile-quran-community/
 ```
@@ -79,7 +81,9 @@ When bumping a version, edit the `newTag` in `cluster/apps/nile-quran-community/
 
 ### Ingress (Gateway API)
 
-Do not use classic `Ingress` resources. Attach services to the Traefik `Gateway` `main` in the `traefik` namespace via `HTTPRoute`s. Set `parentRefs` to the Gateway and include a `sectionName` matching the listener (`https` or `https-argocd`).
+Public services attach to the Traefik `Gateway` `main` in the `traefik` namespace via `HTTPRoute`s. Set `parentRefs` to the Gateway and include a `sectionName` matching the listener (`https`).
+
+Tailnet-only services (Argo CD, backend API) use classic `Ingress` resources with `ingressClassName: tailscale` instead — the Tailscale operator exposes them at `<name>.tail689c1e.ts.net` with Tailscale-managed TLS. Do not expose admin tooling on the public Gateway.
 
 ## Testing and validation
 
@@ -132,11 +136,11 @@ kubectl create secret generic <name> \
   2. Run `prek run --all-files`.
   3. Render affected manifests with `kubectl kustomize`.
   4. Open a PR against `main`.
-  5. After merge, verify sync in Argo CD (`argocd app list`).
+  5. After merge, verify sync in Argo CD (`argocd app list`). This requires Tailscale access — ask a tailnet admin for an invite first.
 
 ## Common gotchas
 
 - Do not modify `.ansible/collections` (gitignored, managed by `ansible-galaxy`).
 - The ApplicationSet's `templatePatch` supports per-app `config.yml` overrides (`autoSync`, `ignoreDifferences`), but no app currently uses them.
 - `CreateNamespace=true` in Argo CD creates namespaces automatically; for `nile-quran-community` the namespace is `default` due to the kustomization override.
-- The Argo CD server runs with `--insecure` (TLS is terminated at the Gateway, not at Argo CD itself).
+- The Argo CD server runs with `--insecure` (TLS is terminated by the Tailscale Ingress proxy, not at Argo CD itself).

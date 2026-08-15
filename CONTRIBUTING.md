@@ -23,6 +23,7 @@ prek run --all-files
 - The cluster only trusts `main`. Test your manifests locally first.
 - Never commit secrets. Use Sealed Secrets for Kubernetes and `ansible-vault` for Ansible. `mise.local.toml` and `ansible/.vaultpass` are gitignored — keep it that way.
 - `kubectl` against the production cluster is a direct change of a live system. Prefer `kubectl kustomize` / `kubectl apply --dry-run=client -k` for verification.
+- Argo CD (`https://argocd.tail689c1e.ts.net/`), the backend API, and the Kubernetes API are **not** on the public internet — they are reachable only over Tailscale. To get access, install [Tailscale](https://tailscale.com/download) and ask a tailnet admin to send you an explicit invite to the tailnet.
 
 ## Branching and commits
 
@@ -38,7 +39,7 @@ prek run --all-files
 2. Verify locally: `prek run --all-files` and render manifests with `kubectl kustomize cluster/apps/<app>`.
 3. Push your branch and open a PR against `main` with a short description of the intended change.
 4. Request a review from another maintainer. Once merged, Argo CD syncs the change automatically (prune + self-heal are enabled).
-5. After a deploy, check `argocd app list` and the app status to confirm the sync succeeded.
+5. After a deploy, check `argocd app list` and the app status (over Tailscale, at `https://argocd.tail689c1e.ts.net/`) to confirm the sync succeeded.
 
 ## Adding a new application
 
