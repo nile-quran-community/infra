@@ -72,7 +72,4 @@ spec:
                 claimName: nqc-db
             - name: nqc-db-backups
               persistentVolumeClaim:
-                claimName: nqc-db-backups
-
-
-                
+                claimName: nqc-db-backups              
