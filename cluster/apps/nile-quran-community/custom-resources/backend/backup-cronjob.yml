@@ -1,0 +1,76 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: nqc-db-backup
+spec:
+  schedule: "0 0 * * *"
+  timeZone: "UTC"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 3
+      template:
+        spec:
+          restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          containers:
+            - name: sqlite-backup
+              image: keinos/sqlite3:3.46.0
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 64Mi
+                limits:
+                  cpu: 250m
+                  memory: 128Mi
+              command:
+                - sh
+                - -c
+                - |
+                  set -eu
+                  ts=$(date +%Y-%m-%d_%H-%M-%S)
+                  out="/backups/db-${ts}.sqlite"
+
+                  sqlite3 /var/lib/nqc/db.sqlite ".backup ${out}"
+
+                  result=$(sqlite3 "${out}" "PRAGMA integrity_check;")
+                  if [ "$result" != "ok" ]; then
+                    echo "Backup integrity check failed: ${result}" >&2
+                    rm -f "${out}"
+                    exit 1
+                  fi
+
+                  gzip "${out}"
+                  out="${out}.gz"
+
+                  size=$(du -h "${out}" | cut -f1)
+                  echo "Backup succeeded: ${out} (${size})"
+
+                  cd /backups
+                  ls -1t db-*.sqlite.gz | tail -n +8 | xargs -r rm -f --
+              securityContext:
+                readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: [ALL]
+                seccompProfile:
+                  type: RuntimeDefault
+              volumeMounts:
+                - name: nqc-db
+                  mountPath: /var/lib/nqc
+                  readOnly: true
+                - name: nqc-db-backups
+                  mountPath: /backups
+          volumes:
+            - name: nqc-db
+              persistentVolumeClaim:
+                claimName: nqc-db
+            - name: nqc-db-backups
+              persistentVolumeClaim:
+                claimName: nqc-db-backups  
+                            
