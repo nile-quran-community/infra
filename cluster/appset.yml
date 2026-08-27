@@ -50,8 +50,12 @@ spec:
           - CreateNamespace=true
           - ServerSideApply=true
   templatePatch: |
-    {{- if or (hasKey . "autoSync") (hasKey . "ignoreDifferences") }}
+    {{- if or (hasKey . "autoSync") (hasKey . "ignoreDifferences") (hasKey . "namespace") }}
     spec:
+      {{- if hasKey . "namespace" }}
+      destination:
+        namespace: {{ .namespace }}
+      {{- end }}
       {{- if hasKey . "autoSync" }}
       syncPolicy:
         automated:
