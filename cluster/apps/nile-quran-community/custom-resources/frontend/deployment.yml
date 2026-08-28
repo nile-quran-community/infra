@@ -17,6 +17,7 @@ spec:
       securityContext:
         runAsUser: 1001
         runAsGroup: 1001
+        fsGroup: 1001
       containers:
         - name: nqc-frontend
           image: ghcr.io/nile-quran-community/nile-quran-nextjs:latest
@@ -45,8 +46,12 @@ spec:
             tcpSocket:
               port: 3000
           volumeMounts:
+            - name: nextjs-cache
+              mountPath: /app/.next/cache
             - name: tmp
               mountPath: /tmp
       volumes:
+        - name: nextjs-cache
+          emptyDir: {}
         - name: tmp
           emptyDir: {}
