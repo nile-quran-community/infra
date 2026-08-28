@@ -1,3 +1,2 @@
-- name: Import k3s cluster playbook
-  become: true
+- name: Create k3s cluster
   ansible.builtin.import_playbook: k3s.orchestration.site

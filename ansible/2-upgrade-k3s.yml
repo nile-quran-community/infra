@@ -1,0 +1,2 @@
+- name: Upgrade k3s cluster
+  ansible.builtin.import_playbook: k3s.orchestration.upgrade
