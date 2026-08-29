@@ -17,6 +17,6 @@ resources:
   - ./custom-resources/backend/backup-cronjob.yml
 images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs
-    newTag: 2.10.2@sha256:3f7c3e9d8e3217704a3a946226c30d09f46b5fb182be369559e447b80aeba620
+    newTag: 2.10.3@sha256:8a9cee816c14fcaeaeaaa1493c89632d07e35f42490c6f0d524d5d9df21b75f7
   - name: ghcr.io/nile-quran-community/nile-quran-django
     newTag: 1.6.0@sha256:b05100e2e7837a55d758de33204a355ac476cef8e813a18074c227fd58f6a3bb
