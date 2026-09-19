@@ -19,4 +19,4 @@ images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs
     newTag: 2.14.2@sha256:e0a87ada3a34af8d2ff439005824de6693f7e3dfe80cb98c6ac5229ab5771276
   - name: ghcr.io/nile-quran-community/nile-quran-django
-    newTag: 1.10.0@sha256:bfd1ab03014d7a47e51a167f1931059c4355ceece370bcfc030b40f4a1244666
+    newTag: 1.11.0@sha256:0ece87e87b320f96b27a2c2fa77806d0ae313e151f0cb6f2a7339d25340a1f1e
