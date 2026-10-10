@@ -12,9 +12,43 @@ spec:
       template:
         spec:
           restartPolicy: OnFailure
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
           containers:
             - name: nqc-backend
               image: ghcr.io/nile-quran-community/nile-quran-django:latest
               command: [django-admin]
               args:
                 - publish_announcements
+              envFrom:
+                - configMapRef:
+                    name: nqc-backend
+                - secretRef:
+                    name: nqc-backend
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 128Mi
+                limits:
+                  cpu: 500m
+                  memory: 256Mi
+              securityContext:
+                readOnlyRootFilesystem: true
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop: [ALL]
+                seccompProfile:
+                  type: RuntimeDefault
+              volumeMounts:
+                - name: tmp
+                  mountPath: /tmp
+                - name: nqc-db
+                  mountPath: /var/lib/nqc
+          volumes:
+            - name: tmp
+              emptyDir: {}
+            - name: nqc-db
+              persistentVolumeClaim:
+                claimName: nqc-db
