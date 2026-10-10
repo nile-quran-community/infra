@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: publish-announcements
+spec:
+  schedule: "*/10 * * * *"
+  concurrencyPolicy: Forbid
+  timeZone: Africa/Cairo
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 300
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: nqc-backend
+              image: ghcr.io/nile-quran-community/nile-quran-django:latest
+              command: [django-admin]
+              args:
+                - publish_announcements
