@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+helmCharts:
+  - releaseName: reloader
+    name: reloader
+    namespace: reloader
+    repo: oci://ghcr.io/stakater/charts
+    version: 2.2.18 # NOTE: v1.4.22
