@@ -4,6 +4,8 @@ metadata:
   name: nqc-backend
   labels:
     app: nqc-backend
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   selector:
