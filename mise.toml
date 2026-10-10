@@ -23,3 +23,14 @@ ANSIBLE_COLLECTIONS_PATH = { value = "{{ config_root }}/ansible/collections:{{ t
 description = "Install all development environment dependencies and hooks"
 alias = "i"
 run = ["mise install", "prek install"]
+
+[tasks.seal]
+description = "Create / edit a Kubernetes sealed secret manifest"
+usage = '''
+flag "-n --namespace <name>" help="Namespace scope for creating the sealed secret" default="default" required=#true
+flag "-f --file <path>" help="File path for the existing secret to seal" required=#true
+flag "-w --write <output>" help="Output file path"
+'''
+run = '''
+kubeseal --controller-name sealed-secrets --controller-namespace sealed-secrets -o yaml -n "{{ usage.namespace }}" -f "{{ usage.file }}"{% if usage.write %} -w "{{ usage.write }}"{% endif %}
+'''
