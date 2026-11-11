@@ -19,6 +19,6 @@ resources:
   - ./custom-resources/cronjobs/publish-announcements.yml
 images:
   - name: ghcr.io/nile-quran-community/nile-quran-nextjs
-    newTag: 2.25.0@sha256:cd9e45c4e65e7e16684538328531e31c0c37a90dff481a0d988ce80e0983ced6
+    newTag: 2.25.1@sha256:a4b74d4eb89c46e634baffb1587899b6036021fabe4a4aa50638f80e30aba838
   - name: ghcr.io/nile-quran-community/nile-quran-django
     newTag: 1.17.0@sha256:ee9033ba904085f9b7ab4ede2e50a8af44b45f68708a9b4e1f463764cc9e8cd7
